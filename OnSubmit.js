@@ -21,6 +21,7 @@ function onSubmit(form) {
   var keyRow = manSheetData[row][manSheetKey.indexOf("Key Row")];
   var matchRaw = manSheetData[row][manSheetKey.indexOf("Match on")];
   var matches = matchRaw.split("+");
+  var dateCol = manSheetData[row][manSheetKey.indexOf("Date")];
   
   //get the responses
   var responses = form.getResponses();
@@ -52,6 +53,10 @@ function onSubmit(form) {
   //Check if we need to find a match
   var match = matchRaw != "";
   
+  //If needed, insert the date
+  if(dateCol != ""){
+    answers[dateCol] = new Date();
+  }
   
   //Find the row to enter data in
   for(var i = keyRow;i < sheetData.length;i++){
@@ -105,6 +110,6 @@ function onSubmit(form) {
 }
 
 function test_onSubmit(){
-  var form = FormApp.openById("10uJiRG7uBLo-mh-ygDF3X8Gjx7iaHGNMrWBk8fNlO74");
+  var form = FormApp.openById("1oNEcYitRe1No_Ija2dRLMuebVIrN5q3VyjdA0h4ILcs");
   onSubmit(form);
 }
