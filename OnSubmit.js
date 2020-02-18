@@ -1,12 +1,9 @@
-function onSubmit(form) {
-  if(form.source != undefined){
-    form = form.source;
-  }
+function processResponse(form,response) {
   
   //Get the data from the manager sheet
-  var id = form.getId();
+   var id = form.getId();
   var row;
-  var manSheet = SpreadsheetApp.getActiveSheet();
+  var manSheet = SpreadsheetApp.getActive().getSheetByName("Submit");
   var manSheetData = manSheet.getRange(1, 1, manSheet.getLastRow(), manSheet.getLastColumn()).getValues();
   var manSheetKey = manSheetData[0];
   for(row = 1;row<manSheetData.length;row++){
@@ -23,9 +20,7 @@ function onSubmit(form) {
   var matches = matchRaw.split("+");
   var dateCol = manSheetData[row][manSheetKey.indexOf("Date")];
   
-  //get the responses
-  var responses = form.getResponses();
-  var response = responses[responses.length-1];
+  
   var itemResponses = response.getItemResponses();
   
   var sName;
@@ -109,7 +104,15 @@ function onSubmit(form) {
   
 }
 
+function onSubmit(form){
+  //get the responses
+  var responses = form.getResponses();
+  //pulls the last response to the form.
+  var response = responses[responses.length-1];
+  processResponse(form,response);
+}
+
 function test_onSubmit(){
-  var form = FormApp.openById("1oNEcYitRe1No_Ija2dRLMuebVIrN5q3VyjdA0h4ILcs");
+  var form = FormApp.openById("1nwGAsOaoZ-Wb4j9yhcUax6JhMjYmNQ61w6CX8ESfGRE");
   onSubmit(form);
 }
