@@ -1,19 +1,10 @@
+//prefills responses for the form and spreadsheet listed on the given row in the Prefill sheet.
 function prefill(row) {
-  /*if(form.source != undefined){
-    form = form.source;
-  }*/
   
   //Get the data from the manager sheet
   var manSheet = SpreadsheetApp.getActive().getSheetByName("Prefill");
   var manSheetData = manSheet.getRange(1, 1, manSheet.getLastRow(), manSheet.getLastColumn()).getValues();
   var manSheetKey = manSheetData[0];
-  /*if(row == undefined){
-    for(row = 1;row<manSheetData.length;row++){
-      if(manSheetData[row][manSheetKey.indexOf("Form")] == id){
-        break;
-      }
-    }
-  }*/
   
   var id = manSheetData[row][manSheetKey.indexOf("Form")];
   var form = FormApp.openById(id);
@@ -27,9 +18,9 @@ function prefill(row) {
   var destCol = manSheetData[row][manSheetKey.indexOf("Dest Col")];
   
   //loop through the sheets
-  //temporarily disabled for testing, only runs for Tifton zone right now.
+  //temporarily disabled for testing, only runs for Gainesville zone right now.
   //for(var i in sheets){
-    var sheet = ss.getSheetByName("Tifton");
+    var sheet = ss.getSheetByName("Gainesville");
     var sheetData = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
     var sheetKey = sheetData[keyRow-1];
     var links = [];

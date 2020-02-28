@@ -15,3 +15,12 @@ function safeFormOpen(id){
     return null;
   }
 }
+
+function setupMenus(){
+  var ui = SpreadsheetApp.getUi();
+  
+  ui.createMenu("Form Manager")
+  .addItem("Retry Errors", "retryErrors")
+  .addItem("Prefill All", "prefillAll")
+  .addToUi();
+}
