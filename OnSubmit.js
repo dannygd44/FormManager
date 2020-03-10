@@ -104,6 +104,9 @@ function processResponse(form,response) {
     //Increments the BCDID to set up for the next entry
     //Separates the zone identifier and the number
     var splitBCDID = BCDID.split('.');
+    if(splitBCDID.length != 2){
+      error(form,response,"Unable to find a properly formatted BCDID. It should have one period, with the number after it.");
+    }
     var BCDIDnum = Number(splitBCDID[1]);
     BCDIDnum++;
     sheet.getRange(1, key.indexOf("BCDID")+1).setValue(splitBCDID[0] + '.' + BCDIDnum);
@@ -131,59 +134,16 @@ function processResponse(form,response) {
   
 }
 
-function onSubmit(form){
-  //get the responses
-  var responses = form.getResponses();
-  //pulls the last response to the form.
-  var response = responses[responses.length-1];
-  processResponse(form,response);
-}
-
-function error(form, response, message){
-  var ss = SpreadsheetApp.getActive();  
-  var sheet = ss.getSheetByName(form.getTitle() + " Errors");
-  if(sheet == null){
-    sheet = SpreadsheetApp.getActive().insertSheet(form.getTitle() + " Errors");
-    var key = ["Form ID","Response ID","Error","Edit Link"];
-    sheet.getRange(1,1,1,key.length).setValues([key]);
-  }
+function onSubmit(e){
   
-  var row = sheet.getLastRow() + 1;
-  var out = [form.getId(),response.getId(),message,response.getEditResponseUrl()];
-  sheet.getRange(row, 1, 1, out.length).setValues([out]);
+  processResponse(e.source,e.response);
 }
 
-function retryErrors(){
-  var ss = SpreadsheetApp.getActive(); 
-  var sheets = ss.getSheets();
-  for(var i in sheets){
-    var sheet = sheets[i];
-    if(sheet.getName().split(" ").indexOf("Errors") != -1){
-      //grab the existing data and then delete the sheet. If the errors persist it will be recreated.
-      var data = sheet.getRange(2,1,sheet.getLastRow(),sheet.getLastColumn()).getValues();
-      ss.deleteSheet(sheet);
-      for(var row in data){
-        var rowData = data[row];
-        if(rowData[0] == ""){
-          break;
-        }
-        
-        var form = FormApp.openById(rowData[0]);
-        var response = form.getResponse(rowData[1]);
-        processResponse(form,response);
-      }
-    }
-  }
-}
 
-function test_onSubmit(){
-  var form = FormApp.openById("10uJiRG7uBLo-mh-ygDF3X8Gjx7iaHGNMrWBk8fNlO74");
-  onSubmit(form);
-}
 
 function test_processResponse(){
   var form = FormApp.openById("1nwGAsOaoZ-Wb4j9yhcUax6JhMjYmNQ61w6CX8ESfGRE");
   var responses = form.getResponses();
-  var response = responses[4];
+  var response = responses[responses.length-1];
   processResponse(form,response);
 }
