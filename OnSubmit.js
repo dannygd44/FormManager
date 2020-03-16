@@ -129,7 +129,7 @@ function processResponse(form,response) {
   var outRange = sheet.getRange(sheetRow, 1, 1, output.length).setValues([output]);
   
   if(custom == "NewBCD"){
-    outRange.setFontColor("red");
+    outRange.setFontColor("orange");
   }
   
 }

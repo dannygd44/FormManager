@@ -30,8 +30,10 @@ function setupMenus(){
   }
   
   var menu = ui.createMenu("Form Manager")
+  .addSubMenu(ui.createMenu("Setup Tasks")
+              .addItem("Set Up Form", "setUpForm")
+              .addItem("Reset Menus", "setupMenus"))
   .addItem("Prefill All", "prefillAll")
-  .addItem("Reset Menus", "setupMenus")
   .addItem("Jax East Emails", "email_jaxE");
   
   if(errors){
@@ -39,4 +41,8 @@ function setupMenus(){
   }
   
   menu.addToUi();
+}
+
+function onOpen(){
+  setupMenus();
 }

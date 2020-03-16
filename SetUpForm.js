@@ -62,6 +62,8 @@ function setUpForm() {
   
 }
 
+
+
 function buildTrigger(form){
   ScriptApp.newTrigger("onSubmit")
   .forForm(form)

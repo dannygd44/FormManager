@@ -31,13 +31,18 @@ function email(zone) {
     for(var j in rows){
       var row = rows[j];
       
-      var message = "<body> <h1>"+row["Area"]+" Key Indicators and BCD's</h1> <p>Please use the following links to report your Key Indicators and BCD updates." 
+      if(row["Area"] == ""){
+        break;
+      }
+      
+      var message = "<body> <h3>Please <b>also</b> report your Key Indicators to your District Leader as usual.</h3>"
+      +"<h2>"+row["Area"]+" Key Indicators and BCD's</h2> <p>Please use the following links to report your Key Indicators and BCD updates." 
       +"<br><b>**In order to open them on your phone, you'll need to long press the link, then select \"Open in Browser\"**</b></p>";
       
       message += "<h2> Key Indicators </h2> <p> Please<a href="+row["KI Link"]+"> long press here </a>and click \"Open in Browser\" to report your key indicators. </p>"
       
       //insert a link with a prefilled Form for each person
-      message += "<h2>BCDs</h2>"
+      message += "<h2>BCD's</h2>"
       if(BCDareas[row["Area"]] != null){
         message += "<p>The following people are listed as on date in your area. Please long press the link next to their name and enter any updates you may have.</p>";
         for (var i in BCDareas[row["Area"]]){
@@ -56,8 +61,8 @@ function email(zone) {
       
       var draft = GmailApp.createDraft(
         row["Email"]
-        ,row["Area"] +" KI's and BCDs "+new Date().toLocaleDateString("en-US")
-        ,"HTML is not loading properly. Please let the Office Assistants know"
+        ,row["Area"] +" KI's and BCD's "+new Date().toLocaleDateString("en-US")
+        ,"HTML is not loading properly. Please let the Office Assistants know."
         ,{htmlBody: message
         ,name: "Office Assistants"
       });
@@ -87,7 +92,7 @@ function getBCDsByArea(ss, zone){
   
   for( var i in BCDs){
     var BCD = BCDs[i];
-    if(areas.indexOf(BCD["Area"]) == -1){
+    if(areas[BCD["Area"]] == null){
       areas[BCD["Area"]] = [BCD];
     }else{
       areas[BCD["Area"]].push(BCD);
