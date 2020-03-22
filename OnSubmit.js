@@ -116,7 +116,7 @@ function processResponse(form,response) {
   }
   
   //Organize the answers to match the sheet, then input them.
-  var rowData = sheetData[sheetRow];
+  var rowData = sheetData[sheetRow-1];
   var output = [];
   
   for(var i in key){
@@ -126,7 +126,28 @@ function processResponse(form,response) {
     }
   }
   
+  
+  
   var outRange = sheet.getRange(sheetRow, 1, 1, output.length).setValues([output]);
+  
+  if(custom == "BCD"){
+    var colors = [];
+    
+    if(answers["Status"] == "On date, not confirmed"){
+      for(var i in output){
+        if(output[i] == rowData[i] || output[i] == ""){
+          colors.push("black");
+        }else{
+          colors.push("orange");
+        }
+      }
+      outRange.setFontColors([colors]);
+    }else if(answers["Status"] == "Baptized AND Confirmed"){
+      outRange.setFontColor("blue");
+    }else if(answers["Status"] == "No Longer on Date"){
+      outRange.setFontColor("red");
+    }
+  } 
   
   if(custom == "NewBCD"){
     outRange.setFontColor("orange");
@@ -142,7 +163,7 @@ function onSubmit(e){
 
 
 function test_processResponse(){
-  var form = FormApp.openById("1nwGAsOaoZ-Wb4j9yhcUax6JhMjYmNQ61w6CX8ESfGRE");
+  var form = FormApp.openById("1oNEcYitRe1No_Ija2dRLMuebVIrN5q3VyjdA0h4ILcs");
   var responses = form.getResponses();
   var response = responses[responses.length-1];
   processResponse(form,response);
