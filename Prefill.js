@@ -5,6 +5,7 @@ function prefill(row) {
   var manSheet = SpreadsheetApp.getActive().getSheetByName("Prefill");
   var manSheetData = manSheet.getRange(1, 1, manSheet.getLastRow(), manSheet.getLastColumn()).getValues();
   var manSheetKey = manSheetData[0];
+  var manSheetRow = row;
   
   var id = manSheetData[row][manSheetKey.indexOf("Form")];
   var form = FormApp.openById(id);
@@ -36,7 +37,7 @@ function prefill(row) {
     
     sheet.getRange(keyRow +1, sheetKey.indexOf(destCol)+1, links.length, 1).setValues(links);
   //}
-  
+  manSheet.getRange(manSheetRow+1, manSheetKey.indexOf("Last Run")+1).setValue(new Date());
 }
 
 function prefillForm(form, key, data){
