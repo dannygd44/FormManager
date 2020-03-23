@@ -46,3 +46,28 @@ function setupMenus(){
 function onOpen(){
   setupMenus();
 }
+
+function getData(sheet,keyRow){
+  if(keyRow == undefined){
+    keyRow = 1;
+  }
+  var key;
+  var allData = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+  var rows = [];
+  
+  for(var j in allData){
+    var rowData = allData[j];
+    if(j<= keyRow-1){
+      key = rowData;
+      continue;
+    }else{
+      var row = [];
+      for(var k in rowData){
+        row[key[k]] = rowData[k];
+      }
+      rows.push(row);
+    }
+  }
+  
+  return rows;
+}
