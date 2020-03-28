@@ -32,9 +32,11 @@ function setupMenus(){
   var menu = ui.createMenu("Form Manager")
   .addSubMenu(ui.createMenu("Setup Tasks")
               .addItem("Set Up Form", "setUpForm")
-              .addItem("Reset Menus", "setupMenus"))
-  .addItem("Prefill All", "prefillAll")
-  .addItem("Jax East Emails", "email_jaxE");
+              .addItem("Reset Menus", "setupMenus")
+              .addItem("Prefill All", "prefillAll"))
+  .addItem("Prefill BCDs", "prefillBCD")
+  .addItem("Email Jax East", "email_jaxE")
+  .addItem("Remind Jax East", "remind_jaxE");
   
   if(errors){
     menu.addItem("Retry Errors", "retryErrors")

@@ -120,3 +120,7 @@ function prefillAll(){
 function test_prefill(){
   prefill(1);
 }
+
+function prefillBCD(){
+  prefill(1);
+}
