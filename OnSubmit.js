@@ -32,6 +32,7 @@ function processResponse(form,response) {
     var item = itemR.getItem();
     var resp = itemR.getResponse();
     var title = item.getTitle();
+    var type = item.getType();
     
     if(title == sId){
       sName = resp;
@@ -135,7 +136,14 @@ function processResponse(form,response) {
     
     if(answers["Status"] == "On date, not confirmed"){
       for(var i in output){
-        if(output[i] == rowData[i] || output[i] == ""){
+        if(rowData[i] instanceof Date){
+          var outDate = new Date(output[i]);
+          if(outDate.getTime() == rowData[i].getTime()){
+            colors.push("black");
+          }else{
+            colors.push("orange");
+          }
+        }else if(output[i] == "" || output[i] == rowData[i]){
           colors.push("black");
         }else{
           colors.push("orange");
