@@ -73,3 +73,38 @@ function getData(sheet,keyRow){
   
   return rows;
 }
+
+function getFile(key){
+  var keySheet = SpreadsheetApp.getActive().getSheetByName("Files");
+  var data = getData(keySheet);
+  
+  var keys = [];
+  for(var i in data){
+    keys[data[i]["Key"]] = data[i]["ID"];
+  }
+  
+  var id = keys[key];
+  
+  if(id == undefined){
+    throw("Unable to find file with key "+key);
+  }
+  
+  var file = DriveApp.getFileById(id);
+  var type = file.getMimeType();
+  
+  if(type == "application/vnd.google-apps.spreadsheet"){
+    return SpreadsheetApp.open(file);
+  }else if (type == "application/vnd.google-apps.form"){
+    return FormApp.openById(id);
+  }else if (type == "application/vnd.google-apps.folder"){
+    return DriveApp.getFolderById(id);
+  }
+  
+  throw("Unable to find sheet, form or folder with key "+key);
+  
+}
+
+function test_getFile(){
+  var file = getFile("BCD History");
+  console.info("Got it!");
+}
