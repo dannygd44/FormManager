@@ -14,6 +14,9 @@ function email(zone,options) {
     options = {all:true};
   }
   
+  //run prefill so the BCD information is up to date
+  //prefillBCD();
+  
   //delete existing drafts
   var label = GmailApp.getUserLabelByName("KI Drafts");
   if(label == null){
@@ -60,7 +63,7 @@ function email(zone,options) {
       +"<h2>"+area+" Key Indicators and BCD's</h2> <p>Please use the following links to report your Key Indicators and BCD updates." 
       +"<br><b>**In order to open them on your phone, you'll need to long press the link, then select \"Open in Browser\"**</b></p>";
       
-      if(options.all || KIs["New People"] == ""){
+      if(options.all || KIs["New People"] === ""){
         message += "<h2> Key Indicators </h2> <p> Please<a href="+row["KI Link"]+"> long press here </a>and click \"Open in Browser\" to report your key indicators. </p>"
         need = true;
       }
@@ -75,7 +78,7 @@ function email(zone,options) {
           
           if(BCDrow["Status"] == "Baptized AND Confirmed"){
             baptized.push(BCDrow);
-          }else if(BCDrow["Status"] == "On date, not confirmed"){
+          }else if(BCDrow["Status"] == "On Date, Not Confirmed"){
             BCDs.push(BCDrow);
           }else if(BCDrow["Status"] == "No Longer on Date"){
             dropped.push(BCDrow);
