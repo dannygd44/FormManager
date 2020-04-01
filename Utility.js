@@ -36,7 +36,8 @@ function setupMenus(){
               .addItem("Prefill All", "prefillAll"))
   .addItem("Prefill BCDs", "prefillBCD")
   .addItem("Email Jax East", "email_jaxE")
-  .addItem("Remind Jax East", "remind_jaxE");
+  .addItem("Remind Jax East", "remind_jaxE")
+  .addItem("Monday Tasks (WIP)","monday");
   
   if(errors){
     menu.addItem("Retry Errors", "retryErrors")

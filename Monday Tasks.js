@@ -20,7 +20,7 @@ function monday() {
   
   //go through the sheets and format them
   var exclude = ["Summary","Old","Key"];
-  var BCDsheets = SpreadsheetApp.open(BCDfile).getSheets();
+  var BCDsheets = SpreadsheetApp.open(BCDreport).getSheets();
   
   for(var i in BCDsheets){
     var sheet = BCDsheets[i];
@@ -50,6 +50,7 @@ function prepBCDreport(sheet){
   //format the key
   var keyRange = sheet.getRange(keyRow+1, keyCol+1, row-keyRow, 3);
   keyRange.breakApart();
+  keyRange.clearFormat();
   keyRange = sheet.getRange(keyRow+1, keyCol+1, row-keyRow, 2);
   keyRange.mergeAcross();
   keyRange.setBorder(true, true, true, true, false, false, "black", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);

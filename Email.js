@@ -15,7 +15,7 @@ function email(zone,options) {
   }
   
   //run prefill so the BCD information is up to date
-  //prefillBCD();
+  prefillBCD();
   
   //delete existing drafts
   var label = GmailApp.getUserLabelByName("KI Drafts");
