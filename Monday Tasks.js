@@ -13,6 +13,9 @@ function monday() {
   var KIhistoryFolder = getFile("KI History");
   KIfile.makeCopy(KIfile.getName(),KIhistoryFolder);
   
+  //move baptisms to YTD, remove dropped
+  //var BCDsheets = SpreadsheetApp.open(BCDreport).getSheets();
+  
   //generate reports for the Stake Presidents
   
   //make a copy of the BCD sheet for reports
@@ -20,10 +23,10 @@ function monday() {
   
   //go through the sheets and format them
   var exclude = ["Summary","Old","Key"];
-  var BCDsheets = SpreadsheetApp.open(BCDfile).getSheets();
+  var BCDkrepSheets = SpreadsheetApp.open(BCDreport).getSheets();
   
-  for(var i in BCDsheets){
-    var sheet = BCDsheets[i];
+  for(var i in BCDkrepSheets){
+    var sheet = BCDkrepSheets[i];
     var name = sheet.getName();
     if(exclude.indexOf(sheet.getName()) == -1){
       prepBCDreport(sheet);
@@ -50,6 +53,7 @@ function prepBCDreport(sheet){
   //format the key
   var keyRange = sheet.getRange(keyRow+1, keyCol+1, row-keyRow, 3);
   keyRange.breakApart();
+  keyRange.clearFormat();
   keyRange = sheet.getRange(keyRow+1, keyCol+1, row-keyRow, 2);
   keyRange.mergeAcross();
   keyRange.setBorder(true, true, true, true, false, false, "black", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
