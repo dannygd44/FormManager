@@ -15,7 +15,7 @@ function email(zone,options) {
   }
   
   //run prefill so the BCD information is up to date
-  //prefillBCD();
+  prefillBCD();
   
   //delete existing drafts
   var label = GmailApp.getUserLabelByName("KI Drafts");
@@ -76,11 +76,11 @@ function email(zone,options) {
         for(var i in BCDareas[area]){
           var BCDrow = BCDareas[area][i];
           
-          if(BCDrow["Status"] == "Baptized AND Confirmed"){
+          if(BCDrow["Status"] == Status.BAPTIZED){
             baptized.push(BCDrow);
-          }else if(BCDrow["Status"] == "On Date, Not Confirmed"){
+          }else if(BCDrow["Status"] == Status.ONDATE){
             BCDs.push(BCDrow);
-          }else if(BCDrow["Status"] == "No Longer on Date"){
+          }else if(BCDrow["Status"] == Status.DROPPED){
             dropped.push(BCDrow);
           }
         }

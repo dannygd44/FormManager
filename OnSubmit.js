@@ -113,7 +113,7 @@ function processResponse(form,response) {
     sheet.getRange(1, key.indexOf("BCDID")+1).setValue(splitBCDID[0] + '.' + BCDIDnum);
     
     //sets the status
-    answers["Status"] = "On Date, Not Confirmed";
+    answers["Status"] = Status.ONDATE;
   }
   
   //Organize the answers to match the sheet, then input them.
@@ -134,7 +134,7 @@ function processResponse(form,response) {
   if(custom == "BCD"){
     var colors = [];
     
-    if(answers["Status"] == "On Date, Not Confirmed"){
+    if(answers["Status"] == Status.ONDATE){
       for(var i in output){
         if(rowData[i] instanceof Date){
           var outDate = new Date(output[i]);
@@ -150,9 +150,9 @@ function processResponse(form,response) {
         }
       }
       outRange.setFontColors([colors]);
-    }else if(answers["Status"] == "Baptized AND Confirmed"){
+    }else if(answers["Status"] == Status.BAPTIZED){
       outRange.setFontColor("blue");
-    }else if(answers["Status"] == "No Longer on Date"){
+    }else if(answers["Status"] == Status.DROPPED){
       outRange.setFontColor("red");
     }
   } 

@@ -14,7 +14,10 @@ function monday() {
   KIfile.makeCopy(KIfile.getName(),KIhistoryFolder);
   
   //move baptisms to YTD, remove dropped
-  //var BCDsheets = SpreadsheetApp.open(BCDreport).getSheets();
+  var BCDsheets = SpreadsheetApp.open(BCDreport).getSheets();
+  for(var i in BCDsheets){
+    var sheet = BCDsheets[i];
+  }
   
   //generate reports for the Stake Presidents
   
