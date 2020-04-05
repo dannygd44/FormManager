@@ -14,10 +14,7 @@ function monday() {
   KIfile.makeCopy(KIfile.getName(),KIhistoryFolder);
   
   //move baptisms to YTD, remove dropped
-  var BCDsheets = SpreadsheetApp.open(BCDreport).getSheets();
-  for(var i in BCDsheets){
-    var sheet = BCDsheets[i];
-  }
+  pruneBCDs(SpreadsheetApp.open(BCDfile));
   
   //generate reports for the Stake Presidents
   
@@ -36,6 +33,53 @@ function monday() {
     }
   }
   
+}
+
+function pruneBCDs(ss){
+  var BCDsheets = ss.getSheets();
+  var topOffset = 3;
+  for(var i in BCDsheets){
+    var sheet = BCDsheets[i];
+    var data = getData(sheet, topOffset);
+    
+    var BCDsOut = [];
+    var BapsOut = [];
+    
+    var j;
+    var row;
+    for(j in data){
+      row = data[j]
+      
+      //this checks where the 
+      if(row["Area Code"] == "Area Code"){
+        break;
+      }else if(row["Area"] == ""){
+        continue;
+      }
+      
+      if(row["Status"] == Status.ONDATE || row["Status"] == ""){
+        BCDsOut.push(row);
+      }else if(row["Status"] == Status.CONFIRMED){
+        BapsOut.push(row);
+      }
+      
+    }
+    
+    //find the key for the YTD section
+    var YTDkey = [];
+    for(var k in row){
+      var val = row[k];
+      if (val != ""){
+        YTDkey[k] = val;
+      }
+    }
+    
+  }
+}
+
+function test_pruneBCDs(){
+  var ss = getFile("BCD Sheet");
+  pruneBCDs(ss);
 }
 
 function prepBCDreport(sheet){
