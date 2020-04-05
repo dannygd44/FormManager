@@ -63,6 +63,8 @@ function processResponse(form,response) {
     answers[dateCol] = new Date();
   }
   
+  answers["Response ID"] = response.getId();
+  
   //Find the row to enter data in
   for(var i = keyRow;i < sheetData.length;i++){
     var rowData = sheetData[i]
@@ -124,6 +126,10 @@ function processResponse(form,response) {
     var out = answers[key[i]];
     if (out != null){
       output[i] = out;
+    }else if(key[i] == "Year to Date"){
+      continue;
+    }else{
+      output[i] = rowData[i];
     }
   }
   
